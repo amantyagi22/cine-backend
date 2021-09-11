@@ -37,7 +37,8 @@ const CandidateSchema = new mongoose.Schema({
         default: false
     },
     Score:{
-        type: Number
+        type: Number,
+        default: 0
     }
 })
 module.exports = mongoose.model("Candidate",CandidateSchema);
