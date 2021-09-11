@@ -35,6 +35,9 @@ const CandidateSchema = new mongoose.Schema({
     isAdmin:{
         type: Boolean,
         default: false
+    },
+    Score:{
+        type: Number
     }
 })
 module.exports = mongoose.model("Candidate",CandidateSchema);

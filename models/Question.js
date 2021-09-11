@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const QuestionSchema = new mongoose.Schema({
-    question:{
+    description:{
         type: String,
         required: true
     },
@@ -13,3 +13,4 @@ const QuestionSchema = new mongoose.Schema({
         default:[]
     }
 })
+module.exports = mongoose.model("Question",QuestionSchema);
