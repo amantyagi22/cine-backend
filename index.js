@@ -19,7 +19,6 @@ function(){console.log("connected to db");}
 //Middleware
 app.use(express.json());
 app.use(bodyParser.json());
-
 app.use("/api/candidates",candidateRoute);
 app.use("/api/questions",questionRoute);
 app.use("/api/admin",adminRoute);
