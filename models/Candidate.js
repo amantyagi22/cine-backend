@@ -41,3 +41,14 @@ const CandidateSchema = new mongoose.Schema({
     }
 })
 module.exports = mongoose.model("Candidate",CandidateSchema);
+
+// {
+//     "name":"aditi",
+//     "studentNumber":"190238",
+//       "rollNumber":"190012930178",
+//     "email":"aditi@gmail.com", 
+//     "phoneNumber":"8988786757",
+//     "branch":"cse",
+//     "residency":"hostel",
+//      "isAdmin":"false"
+// }
