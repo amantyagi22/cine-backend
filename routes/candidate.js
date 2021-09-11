@@ -1,10 +1,6 @@
 const router = require("express").Router();
 const Candidate = require("../models/Candidate");
 
-// router.get("/",(req,res)=>{
-//     res.send("This is candidate route")
-// })
-
 router.get("/",async (req,res)=>{
 
    const candidate = await new Candidate({
