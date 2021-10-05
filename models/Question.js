@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+
 const QuestionSchema = new mongoose.Schema({
   category: {
     type: String,
@@ -7,7 +8,8 @@ const QuestionSchema = new mongoose.Schema({
     type: String,
   },
   option: {
-    type: Array,
+    type: Schema.Types.ObjectId,
+    ref: "Option",
   },
 });
 module.exports = mongoose.model("Question", QuestionSchema);
