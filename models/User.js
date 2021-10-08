@@ -4,14 +4,17 @@ const UserSchema = new mongoose.Schema(
     name: {
       type: String,
       required: true,
+      unique: true,
     },
     studentNumber: {
       type: Number,
       required: true,
+      unique: true,
     },
     rollNumber: {
       type: Number,
       required: true,
+      unique: true,
     },
     branch: {
       type: String,

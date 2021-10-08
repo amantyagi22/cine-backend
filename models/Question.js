@@ -7,7 +7,7 @@ const QuestionSchema = new mongoose.Schema({
   title: {
     type: String,
   },
-  option: {
+  IsCorrectOption: {
     type: Schema.Types.ObjectId,
     ref: "Option",
   },
