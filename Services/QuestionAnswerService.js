@@ -111,7 +111,7 @@ class QuestionAnswerService{
             }
 
         }
-        return {IsSuccess : true}
+        return {IsSuccess : true ,  Qid : QuestionCreateResult._id}
 
     }
     
