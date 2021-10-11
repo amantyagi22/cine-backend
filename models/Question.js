@@ -9,7 +9,7 @@ const QuestionSchema = new mongoose.Schema({
     type: String,
   },
   IsCorrectOption: {
-    type: Schema.Types.ObjectId,
+    type: String,
     ref: "Option",
   },
 });
