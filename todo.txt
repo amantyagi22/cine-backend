@@ -1,0 +1,12 @@
+1 . Login page
+    a. isAdmin,(attendedExam==false),registered 
+        i. isAdmin is true to redirect to admin dashboard
+        ii. (attendedExam==false) and registered then redirect to instruction page
+    b. isAdmin==false,attendedExam==true,candidate not registered
+        --> in these condition give error like.
+        * if attendedExam == true ==> give "already appeared"
+        * if candidate not registered ==> direct to register page
+2. Instruction page (Select the lang. and start the exam accordingly)
+3. Test page
+    Fetch questions and display them
+    
