@@ -3,7 +3,7 @@ const UserSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: true,
+      required: true
     },
     studentNumber: {
       type: Number,
@@ -17,7 +17,7 @@ const UserSchema = new mongoose.Schema(
     },
     branch: {
       type: String,
-      required: true,
+      required: true
     },
     isAdmin: {
       type: Boolean,
