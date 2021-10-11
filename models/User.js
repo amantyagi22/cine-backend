@@ -4,7 +4,6 @@ const UserSchema = new mongoose.Schema(
     name: {
       type: String,
       required: true,
-      unique: true,
     },
     studentNumber: {
       type: Number,
@@ -41,15 +40,13 @@ const UserSchema = new mongoose.Schema(
     password: {
       type: String,
       require: true,
-      min: 6,
     },
     score: {
       type: Number,
-      required: true,
+      default: 0,
     },
     categorySelected: {
       type: String,
-      required: true,
     },
   },
   {
@@ -57,14 +54,3 @@ const UserSchema = new mongoose.Schema(
   }
 );
 module.exports = mongoose.model("Candidate", UserSchema);
-
-// {
-//     "name":"aditi",
-//     "studentNumber":"190238",
-//     "rollNumber":"190012930178",
-//     "email":"aditi@gmail.com",
-//     "phoneNumber":"8988786757",
-//     "branch":"cse",
-//     "residency":"hostel",
-//     "isAdmin":"false"
-// }

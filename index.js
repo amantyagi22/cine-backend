@@ -18,6 +18,10 @@ app.use("/api/users", userRoute);
 app.use("/api/questions", questionRoute);
 app.use("/api/admin", adminRoute);
 
-app.listen(8800, () => {
+const port = process.env.PORT;
+if (port == null || port == "") {
+  port = 8800;
+}
+app.listen(port, () => {
   console.log("Backend Server is running at 8800");
 });
