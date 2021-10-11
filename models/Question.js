@@ -1,16 +1,16 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+
 const QuestionSchema = new mongoose.Schema({
-    description:{
-        type: String,
-        required: true
-    },
-    category:{
-        type: String,
-        required: true
-    },
-    answer:{
-        type: Array,
-        default:[]
-    }
-})
-module.exports = mongoose.model("Question",QuestionSchema);
+  category: {
+    type: String,
+  },
+  title: {
+    type: String,
+  },
+  IsCorrectOption: {
+    type: String,
+    ref: "Option",
+  },
+});
+module.exports = mongoose.model("Question", QuestionSchema);
