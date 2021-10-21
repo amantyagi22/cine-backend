@@ -4,8 +4,7 @@ const OptionSchema = new mongoose.Schema({
     type: String,
   },
   QuestionId: {
-    type: Schema.Types.ObjectId,
-    ref: "Question",
+    type: String,
   },
 });
 module.exports = mongoose.model("Option", OptionSchema);
