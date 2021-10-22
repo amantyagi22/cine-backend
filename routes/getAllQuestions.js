@@ -2,54 +2,37 @@ const router = require("express").Router();
 const Question = require("../models/Question");
 const User = require("../models/User");
 
-router.get("/candidate/question", async (req, res) => {
-  const htmlQuestions = Question.findOne(
-    { category: "html" },
-    "_id",
-    (err, html) => {
-      if (err) return handleError(err);
-    }
-  );
-  const cssQuestions = Question.findOne(
-    { category: "css" },
-    "_id",
-    (err, css) => {
-      if (err) return handleError(err);
-    }
-  );
-  const sqlQuestions = Question.findOne(
-    { category: "sql" },
-    "_id",
-    (err, sql) => {
-      if (err) return handleError(err);
-    }
-  );
-  const aptitudeQuestions = Question.findOne(
+router.get("/questions", async (req, res) => {
+  const htmlQuestions = await Question.find({ category: "html" }, "_id");
+  const html = htmlQuestions.map((ques) => ques._id);
+  const cssQuestions = await Question.find({ category: "css" }, "_id");
+  const css = cssQuestions.map((ques) => ques._id);
+  const sqlQuestions = await Question.find({ category: "sql" }, "_id");
+  const sql = sqlQuestions.map((ques) => ques._id);
+  const aptitudeQuestions = await Question.find(
     { category: "aptitude" },
-    "_id",
-    (err, aptitude) => {
-      if (err) return handleError(err);
-    }
+    "_id"
   );
-  const selectedLanguage = Question.findOne(
+  const aptitude = aptitudeQuestions.map((ques) => ques._id);
+  const selectedLanguage = await Question.find(
     { category: User.categorySelected },
-    "_id",
-    (err, selectedLanguage) => {
-      if (err) return handleError(err);
-    }
+    "_id"
   );
+  const language = selectedLanguage.map((ques) => ques._id);
   try {
     let allQuestions = [
       {
-        html: htmlQuestions,
-        css: cssQuestions,
-        sql: sqlQuestions,
-        aptitude: aptitudeQuestions,
+        html: html,
+        css: css,
+        sql: sql,
+        aptitude: aptitude,
       },
     ];
-    allQuestions[User.categorySelected] = selectedLanguage;
+    allQuestions[selectedLanguage] = language;
     res.status(200).send(allQuestions);
   } catch (err) {
     res.status(500).send(err);
   }
 });
+
+module.exports = router;
