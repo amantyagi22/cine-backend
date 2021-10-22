@@ -6,9 +6,14 @@ const adminRoute = require("./routes/admin");
 const questionRoute = require("./routes/question");
 const app = express();
 
-mongoose.connect(process.env.MONGO_URL, () => {
-  console.log("Connected to MONGODB");
-});
+
+
+mongoose.connect(process.env.MONGO_URL, {
+}).then(() => {
+  console.log(`connection successful`);
+}).catch((e) => {
+  console.log(e);
+})
 
 //Middleware
 app.use(express.json());

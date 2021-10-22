@@ -48,6 +48,10 @@ const UserSchema = new mongoose.Schema(
     categorySelected: {
       type: String,
     },
+    loginAt: {
+      type: Date,
+      default: null
+    }
   },
   {
     timestamps: { createdAt: true, updatedAt: false },

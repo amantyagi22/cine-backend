@@ -81,14 +81,16 @@ class QuestionAnswerService {
             ]
 
         }*/
-    req.Question.IsCorrectOption = null;
+    req.body.Question.IsCorrectOption = null;
     let QuestionCreateResult =
-      await _QuestionCrudService.CreateFromRequestAsync(req.Question);
+      await _QuestionCrudService.CreateFromRequestAsync(req.body.Question);
+    console.log(QuestionCreateResult);
     if (!QuestionCreateResult.IsSuccess) {
       return QuestionCreateResult;
     }
     let CreatedQuestion = QuestionCreateResult.Data;
-    for (let i of req.Options) {
+    console.log(CreatedQuestion);
+    for (let i of req.body.Options) {
       let OptionFormat = {
         title: i.title,
         QuestionId: CreatedQuestion._id,
