@@ -25,18 +25,19 @@ class QuestionAnswerService {
       let QuestionResult = await this.GetQuestionByIdAsync(Qid);
       let OptionResult = await this.GetOptionsByQuestionIdAsync(Qid);
       if (QuestionResult == null || OptionResult == null) {
-        return { IsSuccess: false, Error: "Question not found" };
+        return { IsSuccess: false, Status : 404 ,Error: "Question not found" };
       }
       return {
         IsSuccess: true,
         Question: {
           Title: QuestionResult.title,
           Category: QuestionResult.category,
+          Id : QuestionResult._Id
         },
         Options: OptionResult,
       };
     } catch (error) {
-      return { IsSuccess: false, Error: error };
+      return { IsSuccess: false, Error: error ,Status : 500 };
     }
   };
 
@@ -81,16 +82,16 @@ class QuestionAnswerService {
             ]
 
         }*/
-    req.body.Question.IsCorrectOption = null;
+    req.Question.IsCorrectOption = null;
     let QuestionCreateResult =
-      await _QuestionCrudService.CreateFromRequestAsync(req.body.Question);
+      await _QuestionCrudService.CreateFromRequestAsync(req.Question);
     console.log(QuestionCreateResult);
     if (!QuestionCreateResult.IsSuccess) {
       return QuestionCreateResult;
     }
     let CreatedQuestion = QuestionCreateResult.Data;
-    console.log(CreatedQuestion);
-    for (let i of req.body.Options) {
+    //console.log(CreatedQuestion);
+    for (let i of req.Options) {
       let OptionFormat = {
         title: i.title,
         QuestionId: CreatedQuestion._id,
@@ -104,14 +105,14 @@ class QuestionAnswerService {
       if (i.IsCorrect) {
         let UpdateResult = await this.UpdateCorrectOptionAsync(
           CreatedQuestion._id,
-          OptionCreateResult.Data._Id
+          OptionCreateResult.Data._id
         );
         if (!UpdateResult.IsSuccess) {
           return { IsSuccess: false };
         }
       }
     }
-    return { IsSuccess: true, Qid: QuestionCreateResult._id };
+    return { IsSuccess: true, Qid: CreatedQuestion._id };
   };
 
   //Update
@@ -119,6 +120,7 @@ class QuestionAnswerService {
   UpdateCorrectOptionAsync = async (Qid, OId) => {
     //Qid is QuestionId
     //Oid is OptionId
+    console.log(Qid , OId)
     let QuestionResult = await this.GetQuestionByIdAsync(Qid);
     QuestionResult.IsCorrectOption = OId;
     let UpdateResult = await _QuestionCrudService.UpdateByIdAsync(
@@ -128,14 +130,52 @@ class QuestionAnswerService {
     return UpdateResult;
   };
 
-  UpdateQuestionAsync = async (Qid, req) => {
-    let UpdateResult = await _QuestionCrudService.UpdateByIdAsync(req, Qid);
-    return UpdateResult;
+  UpdateQuestionTitleAsync = async (Qid, req) => {
+    try{
+      let QuestionResult = await _QuestionCrudService.GetbyIdAsync(Qid)
+      if( QuestionResult == null ){
+        return {IsSuccess : false , Status : 404 , Errors : "Not found"}
+      }
+      QuestionResult.title = req.title
+      let UpdateResult = await _QuestionCrudService.UpdateByIdAsync(QuestionResult, Qid);
+      return UpdateResult;
+    }
+    catch(error){
+      return {IsSuccess : false  , Errors : error , Status : 500}
+    }
   };
 
+  UpdateCorrectOptionAsync = async (Qid, req) => {
+    try{
+      let QuestionResult = await _QuestionCrudService.GetbyIdAsync(Qid)
+      if( QuestionResult == null ){
+        return {IsSuccess : false , Status : 404 , Error : "Not found"}
+      }
+      QuestionResult.IsCorrectOption = req.CorrectOption
+      let UpdateResult = await _QuestionCrudService.UpdateByIdAsync(QuestionResult, Qid);
+      return UpdateResult;
+    }
+    catch(error){
+      return {IsSuccess : false  , Error : error , Status : 500}
+    }
+  };
+
+
   UpdateOptionAsync = async (Oid, req) => {
-    let UpdateResult = await _OptionCrudService.UpdateByIdAsync(req, Oid);
-    return UpdateResult;
+    try{
+      
+      let OptionResult = await _OptionCrudService.GetbyIdAsync(Oid)
+      if(OptionResult == null){
+        return {IsSuccess : false , Status : 404 , Error : "Not Found"}
+      }
+      OptionResult.title = req.title
+      let UpdateResult = await _OptionCrudService.UpdateByIdAsync(OptionResult, Oid);
+      return UpdateResult;
+
+    }catch(error){
+        return {IsSuccess : false , Status : 500 , Error : error}
+    }
+
   };
 
   //Delete
