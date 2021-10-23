@@ -10,7 +10,7 @@ class CRUDBase {
         let Req = this._DbContext(req)
         try {
             let result = await Req.save();
-            console.log(result)
+            //console.log(result)
             return {IsSuccess : true,Data : result}
         } catch (error) {
             console.log(error)
@@ -25,7 +25,12 @@ class CRUDBase {
     }
 
     GetbyIdAsync = async (_id) =>{
+        try{
             return await this._DbContext.findById(_id)
+        }catch(error){
+            //console.log(error)
+            return null
+        }
     }
 
     //Update
@@ -35,7 +40,7 @@ class CRUDBase {
             console.log(obj)
             if(obj != null)
             {
-                console.log("here")
+                //console.log("here")
                 await this._DbContext.findByIdAndUpdate(id,{
                   $set : req
                 })
@@ -45,7 +50,7 @@ class CRUDBase {
                 return {IsSuccess : false,Errors:"not found"}
             }
         } catch (error) {
-            return {isSuccess : false,Errors : error}
+            return {IsSuccess : false,Errors : error}
         }
     }
 
