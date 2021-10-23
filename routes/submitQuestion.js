@@ -1,13 +1,18 @@
 const router = require("express").Router();
-const Question = require("../models/Question");
-const QuestionAnswerService = require("../Services/QuestionAnswerService");
+const AnswerQuestionService = require("../Services/AnsweredQuestionServices") 
 
-router.post("/", (req, res) => {
-  const newQuestion = new Question(req.body);
-  try {
-    const QuestionResult =
-      await QuestionAnswerService.GetQuestionsByCategoryAsync();
-    for (let i in QuestionResult) {
-    }
-  } catch (err) {}
-});
+router.post("/" , async(req,res) =>{
+
+ let CreateResult = await AnswerQuestionService.CreateAndUpdateAnsweredQuestionAsync(req.body.Uid,req.body.QuestionId,
+  req.body.Status,req.body.OptionId)
+  if(CreateResult.IsSuccess){
+    res.status(200).send()
+  }
+  else{
+    res.status(500).send(CreateResult)
+  }
+
+})
+
+
+module.exports = router;
