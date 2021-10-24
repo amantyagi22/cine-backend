@@ -25,6 +25,18 @@ router.get('/search/:category', async (req, res) => {
   }
  })
 
+
+ router.get('/search/Shuffled/:category', async (req, res) => {
+
+  let result = await QuestionAnswerService.GetQuestionAndOptionByCategoryShuffledAsync(req.params.category)
+  if (result.IsSuccess) {
+    res.status(200).send(result.Questions)
+  }
+  else{
+    res.status(500).send(result)
+  }
+ })
+
 router.get('/:Qid',async(req , res) =>{
 
   let result = await QuestionAnswerService.GetQuestionAndOptionByIdAsync(req.params.Qid)
@@ -74,7 +86,7 @@ router.patch('/title/:Qid',async(req,res) =>{
 
 router.patch('/correct/:Qid',async(req,res) =>{
 
-  let result = await QuestionAnswerService.UpdateCorrectOptionAsync(req.params.Qid,req.body)
+  let result = await QuestionAnswerService.UpdateCorrectOptionFromRequestAsync(req.params.Qid,req.body)
   if(!result.IsSuccess){
     if(result.Status){
       if(result.Status == 404) res.status(404).send(result.Errors)

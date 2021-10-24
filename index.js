@@ -5,6 +5,7 @@ const userRoute = require("./routes/user");
 const adminRoute = require("./routes/admin");
 const questionRoute = require("./routes/question");
 const allRoute = require("./routes/getAllQuestions");
+const SubmitQuestion = require('./routes/submitQuestion')
 const app = express();
 
 mongoose
@@ -22,6 +23,7 @@ app.use("/api/users", userRoute);
 app.use("/api/questions", questionRoute);
 app.use("/api/admin", adminRoute);
 app.use("/api/candidate", allRoute);
+app.use("/api/submit",SubmitQuestion)
 
 let port = process.env.PORT;
 if (port == null || port == "") {
