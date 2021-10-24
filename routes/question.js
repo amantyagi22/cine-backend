@@ -74,7 +74,7 @@ router.patch('/title/:Qid',async(req,res) =>{
 
 router.patch('/correct/:Qid',async(req,res) =>{
 
-  let result = await QuestionAnswerService.UpdateCorrectOptionAsync(req.params.Qid,req.body)
+  let result = await QuestionAnswerService.UpdateCorrectOptionFromRequestAsync(req.params.Qid,req.body)
   if(!result.IsSuccess){
     if(result.Status){
       if(result.Status == 404) res.status(404).send(result.Errors)

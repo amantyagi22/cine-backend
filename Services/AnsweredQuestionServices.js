@@ -9,10 +9,59 @@ const _UserAnswerCrudService = new CrudService(UserAnswerContext)
 class AnsweredQuestionService {
 
 
-    getAllAnsweredQuestionsByUserId = async(Uid) =>{
+    GetAllAnsweredQuestionsByUserIdAsync = async(Uid) =>{
         return await UserAnswerContext.find({
-            UserId : Uid
+            UserId : Uid,
+            StateId : 1
         })
+    }
+
+    GetAllMarkedForReviewQuestionsByUserIdAsync = async(Uid) =>{
+        return await UserAnswerContext.find(
+            {
+                UserId : Uid,
+                StateId : 3
+            }
+        )
+    }
+
+    GetAllVisitedQuestionByUserIdAsync = async(Uid)=>{
+
+        return await UserAnswerContext.find(
+            {
+                UserId : Uid,
+                StateId : 2
+            }
+        )
+
+    }
+
+
+    GetTotalMarksByUserIdAsync = async(Uid) =>{
+
+        try{
+            let GetAnswersResult = await UserAnswerContext.find({
+                UserId : Uid,
+                StateId : 1
+            }).populate("QuestionId")
+    
+            let Score = 0
+    
+            for(let i of GetAnswersResult){
+                //console.log(i.QuestionId.IsCorrectOption , i.SelectedOption)
+                if(i.QuestionId.IsCorrectOption.equals(i.SelectedOption) ){
+                    //console.log("Yess correct" , i.QuestionId)
+                    Score++
+                }
+            }
+    
+            return Score
+        }
+        catch(error){
+            console.log(error)
+            return null 
+        }
+        
     }
 
 

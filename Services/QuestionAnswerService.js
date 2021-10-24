@@ -103,6 +103,7 @@ class QuestionAnswerService {
         return OptionCreateResult;
       }
       if (i.IsCorrect) {
+        //console.log(i,OptionCreateResult.Data._id)
         let UpdateResult = await this.UpdateCorrectOptionAsync(
           CreatedQuestion._id,
           OptionCreateResult.Data._id
@@ -120,7 +121,6 @@ class QuestionAnswerService {
   UpdateCorrectOptionAsync = async (Qid, OId) => {
     //Qid is QuestionId
     //Oid is OptionId
-    console.log(Qid , OId)
     let QuestionResult = await this.GetQuestionByIdAsync(Qid);
     QuestionResult.IsCorrectOption = OId;
     let UpdateResult = await _QuestionCrudService.UpdateByIdAsync(
@@ -145,7 +145,7 @@ class QuestionAnswerService {
     }
   };
 
-  UpdateCorrectOptionAsync = async (Qid, req) => {
+  UpdateCorrectOptionFromRequestAsync = async (Qid, req) => {
     try{
       let QuestionResult = await _QuestionCrudService.GetbyIdAsync(Qid)
       if( QuestionResult == null ){
