@@ -65,6 +65,40 @@ class QuestionAnswerService {
     }
   };
 
+  GetQuestionAndOptionByCategoryShuffledAsync = async (Category) => {
+    try {
+      let QuestionResult = await this.GetQuestionsByCategoryAsync(Category);
+      if (QuestionResult == null) {
+        return { IsSuccess: false, Error: "Category not found" };
+      }
+      let QuestionArray = [];
+      for (let i of QuestionResult) {
+        let OptionResult = await this.GetOptionsByQuestionIdAsync(i._id);
+        QuestionArray.push({
+          Question: {
+            Id: i._id,
+            Title: i.title,
+            Category: i.category,
+          },
+          Options: OptionResult,
+        });
+      }
+
+      //Shuffle Algo https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+      for (var i = QuestionArray.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = QuestionArray[i];
+        QuestionArray[i] = QuestionArray[j];
+        QuestionArray[j] = temp;
+    }
+
+
+      return { IsSuccess: true, Questions: QuestionArray };
+    } catch (error) {
+      return { IsSuccess: false, Error: error };
+    }
+  };
+
   //Create
   CreateQuestionAndOptionsAsync = async (req) => {
     //Request Format

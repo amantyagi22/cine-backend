@@ -25,6 +25,18 @@ router.get('/search/:category', async (req, res) => {
   }
  })
 
+
+ router.get('/search/Shuffled/:category', async (req, res) => {
+
+  let result = await QuestionAnswerService.GetQuestionAndOptionByCategoryShuffledAsync(req.params.category)
+  if (result.IsSuccess) {
+    res.status(200).send(result.Questions)
+  }
+  else{
+    res.status(500).send(result)
+  }
+ })
+
 router.get('/:Qid',async(req , res) =>{
 
   let result = await QuestionAnswerService.GetQuestionAndOptionByIdAsync(req.params.Qid)
