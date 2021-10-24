@@ -8,26 +8,24 @@ const Schema = mongoose.Schema;
     3 FOR MARKED REVIEW
 
 */
+const AnsweredQuestionsModel = new mongoose.Schema({
+  QuestionId: {
+    type: Schema.Types.ObjectId,
+    ref: "Question",
+  },
+  UserId: {
+    type: Schema.Types.ObjectId,
+    ref: "Candidate",
+  },
+  StateId: {
+    type: Number,
+    default: 2,
+  },
+  SelectedOption: {
+    type: Schema.Types.ObjectId,
+    ref: "Option",
+    default: null,
+  },
+});
 
-
-const AnsweredQuestionsModel =  new mongoose.Schema({
-    QuestionId: {
-      type: Schema.Types.ObjectId,
-      ref: "Question",
-    },
-    UserId : {
-        type : Schema.Types.ObjectId,
-        ref : "Candidate"
-    },
-    StateId :{
-        type : Number,
-        default : 2
-    },
-    SelectedOption : {
-        type : Schema.Types.ObjectId,
-        ref : "Option",
-        default : null
-    }
-  });
-
-  module.exports = mongoose.model("UserAnswers", AnsweredQuestionsModel);
+module.exports = mongoose.model("UserAnswers", AnsweredQuestionsModel);
