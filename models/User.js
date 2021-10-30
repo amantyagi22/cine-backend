@@ -15,6 +15,10 @@ const UserSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    phoneNumber: {
+      type: Number,
+      required: true,
+    },
     branch: {
       type: String,
       required: true,
@@ -39,7 +43,6 @@ const UserSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      require: true,
     },
     score: {
       type: Number,
@@ -58,3 +61,12 @@ const UserSchema = new mongoose.Schema(
   }
 );
 module.exports = mongoose.model("Candidate", UserSchema);
+
+// {
+//   "name": "Aman Tyagi",
+//   "studentNumber" : "1910004",
+//   "rollNumber" : "1900270100025",
+//   "phoneNumber" : "6396952072",
+//   "branch" : "CSE",
+//   "email" : "amantyagi2k@gmail.com"
+// }
