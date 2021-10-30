@@ -3,7 +3,7 @@ const UserSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: true
+      required: true,
     },
     studentNumber: {
       type: Number,
@@ -17,7 +17,7 @@ const UserSchema = new mongoose.Schema(
     },
     branch: {
       type: String,
-      required: true
+      required: true,
     },
     isAdmin: {
       type: Boolean,
@@ -50,8 +50,8 @@ const UserSchema = new mongoose.Schema(
     },
     loginAt: {
       type: Date,
-      default: null
-    }
+      default: null,
+    },
   },
   {
     timestamps: { createdAt: true, updatedAt: false },
