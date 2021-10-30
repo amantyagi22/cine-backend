@@ -60,7 +60,7 @@ const UserSchema = new mongoose.Schema(
     timestamps: { createdAt: true, updatedAt: false },
   }
 );
-module.exports = mongoose.model("Candidate", UserSchema);
+module.exports = mongoose.model("User", UserSchema);
 
 // {
 //   "name": "Aman Tyagi",
