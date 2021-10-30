@@ -19,7 +19,6 @@ router.get("/questions/:selectedCategory", async (req, res) => {
     "_id"
   );
   const language = selectedLanguage.map((ques) => ques._id);
-  const category = req.params.selectedCategory;
   try {
     let allQuestions = [
       {
@@ -27,10 +26,9 @@ router.get("/questions/:selectedCategory", async (req, res) => {
         css: css,
         sql: sql,
         aptitude: aptitude,
+        category: language,
       },
     ];
-    allQuestions[req.params.selectedCategory] = language;
-    console.log(req.params.selectedCategory);
     res.status(200).send(allQuestions);
   } catch (err) {
     res.status(500).send(err);
