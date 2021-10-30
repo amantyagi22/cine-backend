@@ -67,6 +67,24 @@ class UserService {
 
     }
 
+
+    CheckIsUserAdminFromRequestAsync = async(req) =>{
+        let result = await TokenService.VerifyTokenAndGetId(req)
+        if(result.IsSuccess){
+            let Uid = result._id
+            return await this.CheckIsUserAdminFromUidAsync(Uid)            
+        }
+        else{
+            return false
+        }
+    }
+
+    CheckIsUserAdminFromUidAsync = async(Uid) =>{
+        let result = await _UserCrudService.GetbyIdAsync(Uid)
+        return result.isAdmin 
+    }
+
+
     _GenrateJwtToken = async (Id) =>{
 
         let token  = await TokenService.SignToken(Id)
