@@ -6,6 +6,8 @@ const adminRoute = require("./routes/admin");
 const questionRoute = require("./routes/question");
 const allRoute = require("./routes/getAllQuestions");
 const SubmitQuestion = require('./routes/submitQuestion')
+const LoginAndRegisterRoute = require('./routes/login')
+const cors = require('cors')
 const app = express();
 
 mongoose
@@ -18,7 +20,9 @@ mongoose
   });
 
 //Middleware
+app.use(cors())
 app.use(express.json());
+app.use("/api/sign",LoginAndRegisterRoute)
 app.use("/api/users", userRoute);
 app.use("/api/questions", questionRoute);
 app.use("/api/admin", adminRoute);
