@@ -3,7 +3,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const userRoute = require("./routes/user");
 const questionRoute = require("./routes/question");
-const allRoute = require("./routes/getAllQuestions");
+const allQuestions = require("./routes/getAllQuestions");
+const allCandidates = require("./routes/getAllCandidates");
 const SubmitQuestion = require("./routes/submitQuestion");
 const app = express();
 
@@ -19,8 +20,8 @@ mongoose
 //Middleware
 app.use(express.json());
 app.use("/api/users", userRoute);
-app.use("/api/questions", questionRoute);
-app.use("/api/candidate", allRoute);
+app.use("/api/questions", questionRoute, allQuestions);
+app.use("/api/candidates", allCandidates);
 app.use("/api/submit", SubmitQuestion);
 
 let port = process.env.PORT;

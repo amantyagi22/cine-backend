@@ -1,8 +1,7 @@
 const router = require("express").Router();
 const Question = require("../models/Question");
-const User = require("../models/User");
 
-router.get("/questions/:selectedCategory", async (req, res) => {
+router.get("/all/:selectedCategory", async (req, res) => {
   const htmlQuestions = await Question.find({ category: "html" }, "_id");
   const html = htmlQuestions.map((ques) => ques._id);
   const cssQuestions = await Question.find({ category: "css" }, "_id");
