@@ -3,7 +3,7 @@ const UserSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: true
+      required: true,
     },
     studentNumber: {
       type: Number,
@@ -15,9 +15,14 @@ const UserSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    phoneNumber: {
+      type: Number,
+      required: true,
+      unique: true,
+    },
     branch: {
       type: String,
-      required: true
+      required: true,
     },
     isAdmin: {
       type: Boolean,
@@ -39,7 +44,6 @@ const UserSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      require: true,
     },
     score: {
       type: Number,
@@ -50,11 +54,20 @@ const UserSchema = new mongoose.Schema(
     },
     loginAt: {
       type: Date,
-      default: null
-    }
+      default: null,
+    },
   },
   {
     timestamps: { createdAt: true, updatedAt: false },
   }
 );
-module.exports = mongoose.model("Candidate", UserSchema);
+module.exports = mongoose.model("User", UserSchema);
+
+// {
+//   "name": "Aman Tyagi",
+//   "studentNumber" : "1910004",
+//   "rollNumber" : "1900270100025",
+//   "phoneNumber" : "6396952072",
+//   "branch" : "CSE",
+//   "email" : "amantyagi2k@gmail.com"
+// }

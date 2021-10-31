@@ -1,8 +1,7 @@
 const router = require("express").Router();
 const Question = require("../models/Question");
-const User = require("../models/User");
 
-router.get("/questions", async (req, res) => {
+router.get("/all/:selectedCategory", async (req, res) => {
   const htmlQuestions = await Question.find({ category: "html" }, "_id");
   const html = htmlQuestions.map((ques) => ques._id);
   const cssQuestions = await Question.find({ category: "css" }, "_id");
@@ -15,7 +14,7 @@ router.get("/questions", async (req, res) => {
   );
   const aptitude = aptitudeQuestions.map((ques) => ques._id);
   const selectedLanguage = await Question.find(
-    { category: User.categorySelected },
+    { category: req.params.selectedCategory },
     "_id"
   );
   const language = selectedLanguage.map((ques) => ques._id);
@@ -26,9 +25,9 @@ router.get("/questions", async (req, res) => {
         css: css,
         sql: sql,
         aptitude: aptitude,
+        category: language,
       },
     ];
-    allQuestions[selectedLanguage] = language;
     res.status(200).send(allQuestions);
   } catch (err) {
     res.status(500).send(err);
