@@ -8,8 +8,7 @@ const allCandidates = require("./routes/getAllCandidates");
 const SubmitQuestion = require("./routes/submitQuestion");
 const app = express();
 
-mongoose
-  .connect(process.env.MONGO_URL, {})
+mongoose.connect(process.env.MONGO_URL, {})
   .then(() => {
     console.log(`Connected to MONGODB`);
   })

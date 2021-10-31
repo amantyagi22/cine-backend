@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
+const nodemailer = require("nodemailer")
 // Add a user
 router.post("/register", async (req, res) => {
   try {
@@ -12,33 +13,33 @@ router.post("/register", async (req, res) => {
 
     const candidateSchema = new User(body);
     const studentData = await candidateSchema.save();
-    // console.log(studentData);
-    // ##################### using  nodemailer #################//
-    // const transporter = nodemailer.createTransport({
-    //   service: "gmail",
-    //   auth: {
-    //     user: process.env.EMAIL,
-    //     pass: process.env.PASS_E,
-    //   },
-    // });
-    // const mailOption = {
-    //   from: process.env.EMAIL,
-    //   to: req.body.email,
-    //   subject: "CINE'21", // https://www.youtube.com/redirect?event=video_description&redir_token=QUFFLUhqbGZVWUJFbnFPUFk1aGVkMm9UVHhnaWJjc1FYUXxBQ3Jtc0tuZnFNa3BMVkR5SkZIWm5lLWw0NEF5b0tsYnF3T2dnR3pXUm1xNVo4YTJ2cFJiLVJsdGpfc24zYkpaWGx5bnFiT3lLb0NGQk9zcVlqaF9lRXI3alN6Qm5XVXBHNEdNS2NkeERuY0tZaDg5ZW1aUkZEYw&q=https%3A%2F%2Fmyaccount.google.com%2Flesssecureapps
-    //   html:
-    //     "<h3>CONGRATULATION,</h3><br>" +
-    //     "<h1 style='font-weight:bold;'>You are successfully registered</h1>",
-    // };
+    console.log(studentData);
+    //##################### using  nodemailer #################//
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASS_E,
+      },
+    });
+    const mailOption = {
+      from: process.env.EMAIL,
+      to: req.body.email,
+      subject: "CINE'21", // https://www.youtube.com/redirect?event=video_description&redir_token=QUFFLUhqbGZVWUJFbnFPUFk1aGVkMm9UVHhnaWJjc1FYUXxBQ3Jtc0tuZnFNa3BMVkR5SkZIWm5lLWw0NEF5b0tsYnF3T2dnR3pXUm1xNVo4YTJ2cFJiLVJsdGpfc24zYkpaWGx5bnFiT3lLb0NGQk9zcVlqaF9lRXI3alN6Qm5XVXBHNEdNS2NkeERuY0tZaDg5ZW1aUkZEYw&q=https%3A%2F%2Fmyaccount.google.com%2Flesssecureapps
+      html:
+        "<h3>CONGRATULATION,</h3><br>" +
+        "<h1 style='font-weight:bold;'>You are successfully registered</h1>",
+    };
 
-    // transporter.sendMail(mailOption, function (error, info) {
-    //   if (error) {
-    //     console.log(error);
-    //     res.send(error);
-    //   } else {
-    //     console.log(mailOption);
-    //     res.send(mailOption);
-    //   }
-    // });
+    transporter.sendMail(mailOption, function (error, info) {
+      if (error) {
+        console.log(error);
+        // res.send(error);
+      } else {
+        console.log(mailOption);
+        // res.send(mailOption);
+      }
+    });
     // res.status(200).send(mailOption);
     res.status(200).send({
       message: "User Successfully Registered",
@@ -83,4 +84,42 @@ router.put("/:id", async (req, res) => {
   }
   // }
 });
+
+
+// feedback
+router.post("/feedback", async (req, res) => {
+  try {
+    const feedbackText = {
+      feed: req.body.text
+    };
+    console.log(feedbackText);
+    const feedbackSchema = new feedback(feedbackText);
+    const fb = await feedbackSchema.save();
+    console.log(fb);
+    res.status(200).send("successfully done")
+  }
+  catch (error) {
+    console.log(error)
+    res.status(400).send(error);
+  }
+})
+
+
+// after start update log in ime and category  
+router.put("/:id", async (req, res) => {
+  try {
+    const data = await candidate.findOneAndUpdate({ _id: req.params.id }, {
+      loginAt: new Date(),
+      hasAppeared: true,
+      categorySelected: req.body.category
+    });
+    console.log(data)
+    res.status(200).send(data);
+  } catch (error) {
+    console.log(error)
+    res.status(400).send(error);
+  }
+})
+
+
 module.exports = router;
