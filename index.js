@@ -11,8 +11,7 @@ const LoginAndRegisterRoute = require('./routes/login')
 const cors = require('cors')
 const app = express();
 
-mongoose
-  .connect(process.env.MONGO_URL, {})
+mongoose.connect(process.env.MONGO_URL, {})
   .then(() => {
     console.log(`Connected to MONGODB`);
   })
