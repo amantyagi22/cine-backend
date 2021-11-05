@@ -123,8 +123,8 @@ router.put("/instruction/", async (req, res) => {
   try {
     // console.log(req)
     const userId = tokenServices.VerifyTokenAndGetId(req);
-    console.log(userId);
-    const user = await User.findById(userId);
+    console.log(userId._id);
+    const user = await User.findById(userId._id);
     const data = await User.findOneAndUpdate(
       { _id: userId._id },
       {
