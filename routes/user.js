@@ -2,6 +2,8 @@ const router = require("express").Router();
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer")
+const tokenServices = require("../Services/TokenServices")
+
 // Add a user
 router.post("/register", async (req, res) => {
   try {
@@ -72,7 +74,7 @@ router.delete("/:id", async (req, res) => {
 });
 
 // Update a user
-router.put("/:id", async (req, res) => {
+router.put("/update", async (req, res) => {
   // if (req.body.isAdmin) {
   try {
     const user = await User.findByIdAndUpdate(req.params.id, {
@@ -82,7 +84,7 @@ router.put("/:id", async (req, res) => {
   } catch (err) {
     return res.status(500).json(err);
   }
-  // }
+
 });
 
 
@@ -104,22 +106,44 @@ router.post("/feedback", async (req, res) => {
   }
 })
 
-
 // after start update log in ime and category  
-router.put("/:id", async (req, res) => {
+// router.put("/instruction/:id", async (req, res) => {
+//   try {
+//     const data = await User.findOneAndUpdate({ _id: req.params.id }, {
+//       loginAt: new Date(),
+//       hasAppeared: true,
+//       categorySelected: req.body.category
+//     });
+//     console.log(data)
+//     res.status(200).send(data);
+//   } catch (error) {
+//     console.log(error)
+//     res.status(400).send(error);
+//   }
+// })
+
+router.put("/instruction/", async (req, res) => {
   try {
-    const data = await candidate.findOneAndUpdate({ _id: req.params.id }, {
+    // console.log(req)
+    const userId = tokenServices.VerifyTokenAndGetId(
+      req
+    )
+    console.log(userId);
+    const data = await User.findOneAndUpdate({ _id: userId._id }, {
       loginAt: new Date(),
       hasAppeared: true,
       categorySelected: req.body.category
     });
     console.log(data)
     res.status(200).send(data);
-  } catch (error) {
+  }
+  catch (error) {
     console.log(error)
     res.status(400).send(error);
   }
 })
+
+
 
 
 module.exports = router;
