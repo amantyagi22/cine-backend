@@ -1,8 +1,8 @@
 const router = require("express").Router();
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
-const nodemailer = require("nodemailer")
-const tokenServices = require("../Services/TokenServices")
+const nodemailer = require("nodemailer");
+const tokenServices = require("../Services/TokenServices");
 
 // Add a user
 router.post("/register", async (req, res) => {
@@ -84,29 +84,26 @@ router.put("/update", async (req, res) => {
   } catch (err) {
     return res.status(500).json(err);
   }
-
 });
-
 
 // feedback
 router.post("/feedback", async (req, res) => {
   try {
     const feedbackText = {
-      feed: req.body.text
+      feed: req.body.text,
     };
     console.log(feedbackText);
     const feedbackSchema = new feedback(feedbackText);
     const fb = await feedbackSchema.save();
     console.log(fb);
-    res.status(200).send("successfully done")
-  }
-  catch (error) {
-    console.log(error)
+    res.status(200).send("successfully done");
+  } catch (error) {
+    console.log(error);
     res.status(400).send(error);
   }
-})
+});
 
-// after start update log in ime and category  
+// after start update log in ime and category
 // router.put("/instruction/:id", async (req, res) => {
 //   try {
 //     const data = await User.findOneAndUpdate({ _id: req.params.id }, {
@@ -125,25 +122,23 @@ router.post("/feedback", async (req, res) => {
 router.put("/instruction/", async (req, res) => {
   try {
     // console.log(req)
-    const userId = tokenServices.VerifyTokenAndGetId(
-      req
-    )
+    const userId = tokenServices.VerifyTokenAndGetId(req);
     console.log(userId);
-    const data = await User.findOneAndUpdate({ _id: userId._id }, {
-      loginAt: new Date(),
-      hasAppeared: true,
-      categorySelected: req.body.category
-    });
-    console.log(data)
-    res.status(200).send(data);
-  }
-  catch (error) {
-    console.log(error)
+    const user = await User.findById(userId);
+    const data = await User.findOneAndUpdate(
+      { _id: userId._id },
+      {
+        loginAt: new Date(),
+        hasAppeared: true,
+        categorySelected: req.body.category,
+      }
+    );
+    console.log(data);
+    res.status(200).send(user);
+  } catch (error) {
+    console.log(error);
     res.status(400).send(error);
   }
-})
-
-
-
+});
 
 module.exports = router;
