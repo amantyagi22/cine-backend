@@ -125,9 +125,9 @@ router.put("/instruction", async (req, res) => {
     const data = await User.findByIdAndUpdate(userId._id, {
       loginAt: new Date(),
       hasAppeared: true,
-      categorySelected: req.body.category,
+      $set: req.body,
     });
-    res.status(200).json({ id: userId._id });
+    res.status(200).json("Updated User data");
   } catch (error) {
     res.status(400).json(error);
   }
