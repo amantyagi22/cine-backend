@@ -119,22 +119,19 @@ router.post("/feedback", async (req, res) => {
 //   }
 // })
 
-router.put("/instruction/", async (req, res) => {
+router.put("/instruction", async (req, res) => {
   try {
     const userId = tokenServices.VerifyTokenAndGetId(req);
+    console.log(userId);
     const user = await User.findById(userId._id);
-    const data = await User.findOneAndUpdate(
-      { _id: userId._id },
-      {
-        loginAt: new Date(),
-        hasAppeared: true,
-        categorySelected: req.body.category,
-      }
-    );
+    const data = await User.findByIdAndUpdate(userId._id, {
+      loginAt: new Date(),
+      hasAppeared: true,
+      categorySelected: req.body.category,
+    });
     res.status(200).json(user);
   } catch (error) {
-    console.log(error);
-    res.status(400).send(error);
+    res.status(400).json(error);
   }
 });
 
