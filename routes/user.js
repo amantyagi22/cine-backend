@@ -121,9 +121,7 @@ router.post("/feedback", async (req, res) => {
 
 router.put("/instruction/", async (req, res) => {
   try {
-    // console.log(req)
     const userId = tokenServices.VerifyTokenAndGetId(req);
-    console.log(userId._id);
     const user = await User.findById(userId._id);
     const data = await User.findOneAndUpdate(
       { _id: userId._id },
@@ -133,8 +131,7 @@ router.put("/instruction/", async (req, res) => {
         categorySelected: req.body.category,
       }
     );
-    console.log(data);
-    res.status(200).send(user);
+    res.status(200).json(user);
   } catch (error) {
     console.log(error);
     res.status(400).send(error);
