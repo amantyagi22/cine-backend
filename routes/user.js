@@ -3,6 +3,7 @@ const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
 const tokenServices = require("../Services/TokenServices");
+const { findById } = require("../models/User");
 
 // Add a user
 router.post("/register", async (req, res) => {
@@ -105,14 +106,20 @@ router.post("/feedback", async (req, res) => {
 
 router.put("/instruction", async (req, res) => {
   try {
-    const userId = tokenServices.VerifyTokenAndGetId(req);
+    // const str = req.body.headers["auth-token"];
+    // const userId = tokenServices.VerifyTokenAndGetIdFromJwt(
+    //   str.substr(str.indexOf(" ") + 1)
+    // );
+    const userId = tokenServices.VerifyAuthTokenAndGetId(req);
+    const user = await User.findById(userId._id);
     const data = await User.findByIdAndUpdate(userId._id, {
       loginAt: new Date(),
       hasAppeared: true,
-      $set: req.body,
+      categorySelected: req.body.category,
     });
-    res.status(200).json("Updated User data");
+    res.status(200).json(userId._id);
   } catch (error) {
+    console.log(error);
     res.status(400).json(error);
   }
 });
