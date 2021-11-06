@@ -103,22 +103,6 @@ router.post("/feedback", async (req, res) => {
   }
 });
 
-// after start update log in ime and category
-// router.put("/instruction/:id", async (req, res) => {
-//   try {
-//     const data = await User.findOneAndUpdate({ _id: req.params.id }, {
-//       loginAt: new Date(),
-//       hasAppeared: true,
-//       categorySelected: req.body.category
-//     });
-//     console.log(data)
-//     res.status(200).send(data);
-//   } catch (error) {
-//     console.log(error)
-//     res.status(400).send(error);
-//   }
-// })
-
 router.put("/instruction", async (req, res) => {
   try {
     const userId = tokenServices.VerifyTokenAndGetId(req);
