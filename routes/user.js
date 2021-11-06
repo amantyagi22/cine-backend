@@ -127,7 +127,7 @@ router.put("/instruction", async (req, res) => {
       hasAppeared: true,
       categorySelected: req.body.category,
     });
-    res.status(200).json(userId._id);
+    res.status(200).json({ id: userId._id });
   } catch (error) {
     res.status(400).json(error);
   }
