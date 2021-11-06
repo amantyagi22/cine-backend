@@ -129,7 +129,7 @@ router.put("/instruction", async (req, res) => {
       hasAppeared: true,
       categorySelected: req.body.category,
     });
-    res.status(200).json(user);
+    res.status(200).json("updated the details");
   } catch (error) {
     res.status(400).json(error);
   }
