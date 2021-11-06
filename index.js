@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const userRoute = require("./routes/user");
 const questionRoute = require("./routes/question");
 const allQuestions = require("./routes/getAllQuestions");
+const allQuestionsAllCategory = require("./routes/getAllQuestionsAllCategory");
 const allCandidates = require("./routes/getAllCandidates");
 const SubmitQuestion = require("./routes/submitQuestion");
 const LoginAndRegisterRoute = require("./routes/login");
@@ -25,7 +26,7 @@ app.use(cors());
 app.use(express.json());
 app.use("/api/sign", LoginAndRegisterRoute);
 app.use("/api/users", userRoute);
-app.use("/api/questions", questionRoute, allQuestions);
+app.use("/api/questions", allQuestionsAllCategory, questionRoute, allQuestions);
 app.use("/api/candidates", allCandidates);
 app.use("/api/submit", SubmitQuestion);
 
