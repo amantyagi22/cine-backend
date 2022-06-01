@@ -16,7 +16,7 @@ class JwtToken {
   async SignToken(id) {
     let payload = {};
     if (id != null && id.toString().length > 0) {
-      payload._id = id.toString();
+      payload.id = id.toString();
       if (this.expiry != null) {
         payload.exp = expiry;
       }
