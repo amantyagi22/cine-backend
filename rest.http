@@ -1,0 +1,21 @@
+### REGISTER A USER
+POST http://localhost:8800/api/users/register
+Content-Type: application/json
+
+{
+  "name": "Aman Tyagi",
+  "studentNumber" : "1910004",
+  "rollNumber" : "1900270100025",
+  "phoneNumber" : "6396952072",
+  "branch" : "CSE",
+  "email" : "amantyagi2k@gmail.com"
+}
+
+### LOGIN A USER
+POST http://localhost:8800/api/sign/Login
+Content-Type: application/json
+
+{
+    "StudentId" : 1910004,
+    "Password" :"secret"
+}
